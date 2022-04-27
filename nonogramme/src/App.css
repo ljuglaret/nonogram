@@ -66,11 +66,28 @@
   margin-left: 35%;
 }
 
-#indications{
+.indicationsi{
   margin: 0 auto;
   display:inline-block;
   width :100px;
   height: 100px;
+}
+
+
+.indicationsj{
+  margin: 0 auto;
+  display:inline-block;
+  width :100px;
+  height: 100px;
+}
+
+
+.indicationsf{
+  margin: 0 auto;
+  display:inline-block;
+  width :100px;
+  height: 100px;
+  background-color: gray;
 }
 
 #vide{
