@@ -56,6 +56,11 @@
   background-color: red;
 }
 
+.gridCell-gray{
+  background-color: gray;
+}
+
+
 #grilleHTML{
   margin-top: 2%;
   margin-left: 35%;
@@ -91,4 +96,8 @@
 
 .btn-red{
   background-color: red;
+}
+
+.btn-gray{
+  background-color:gray;
 }

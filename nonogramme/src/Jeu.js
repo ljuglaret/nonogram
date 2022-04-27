@@ -1,42 +1,87 @@
 import React from "react";
 import "./App.css";
 const dimension = 4;
-const indications = [[1,2],[0],[3,2],[2],[2],[3,2],[1,2],[1]]
+//attention , il s'agit d'un exemple de présentation, 
+//il peut y avoir des incohérences
+const indications = [[1,2],[0],[3,2],[2],[2],[1,2],[0],[1]]
 const caseInitiale = {color:"white", click : false};
 const grille = []
+const grilleAttendue = []
+
 export default function Jeu()  {
 
-  function genererTableau(){
+  function genereGrille(){
+    genereationAlea()
     for (let i = 0 ; i < dimension ; i++){
       let ligne = []
       for (let j = 0 ; j < dimension ; j++){
         ligne[j]=caseInitiale
       }
-      grille[i] = ligne[i]
+      grille[i] = ligne
+    }
+    var app = document.getElementsByClassName("App")[0]
+    var buttonChoix = document.createElement("button")
+    var grilleHTML = document.createElement("div")
+    grilleHTML.id = "grilleHTML"
+    app.parentNode.insertBefore(grilleHTML,app.nextSibling)
+    for (let i = 0 ; i <= dimension ; i++){
+   
+      var ligne = document.createElement("div");
+      grilleHTML.insertBefore(ligne,grilleHTML.nextSibling);
+    
+      for (let j = 0 ; j <= dimension ; j++){
+        var btnCase = document.createElement("button");
+        defBtnCase(btnCase,i,j)
+        ligne.insertBefore(btnCase,ligne.nextSibling)
+      }
+    }
+    defBtnChoix(buttonChoix)
+    app.parentNode.insertBefore(buttonChoix,app.nextSibling)
+  }
+
+  function genereationAlea(){
+       //remplis aleatoirement une grille
+       const colors = ["btn btn-gray","btn btn-green"]
+       for (let i = 0 ; i < dimension ; i++){
+         const ligneAlea = []
+         for (let j = 0 ; j < dimension ; j ++){ 
+          const caseAleatoire = {color:colors[Math.floor(Math.random() * 2)], click : true};  
+           ligneAlea[j] =  caseAleatoire
+           }
+         grilleAttendue[i] = ligneAlea
+       }
+  }
+  function correction(){
+ 
+//compte les cases grisées sur la grille attendue
+    for (let i = 0 ; i < grilleAttendue.length ; i++){
+      //let comptelignei = 0;
+      for (let j = 0 ; j < grilleAttendue.length ; j ++){
+        
+        //indications[]
     }
   }
-  genererTableau()
-  
-  //const [cls, setCls] = useState("green");
+ 
 
-  //change boutonPrincipal
-   /* function changeColor(){
-    setCls((cls) => 
-      (cls === "red" ? "green" : "red")
-      )
-    }*/
+  for (let i = 0 ; i < grilleAttendue.length ; i++){
+     for (let j = 0 ; j < grilleAttendue.length ; j ++){
+     if(grille[i][j].color !== grilleAttendue[i][j].color){
+       console.log("erreur en " + i +"-"+ j)
+     }
+   }
+ }
+}
 
   function changeColor(){
     const btn = document.getElementsByClassName("btn")[0];
-    if (btn.className === "btn btn-red"){
+    if (btn.className === "btn btn-gray"){
       btn.className = "btn btn-green";
     }
     else{
-      btn.className = "btn btn-red";
+      btn.className = "btn btn-gray";
     }
   }
   
-
   function changeState(i,j){
     const btn = document.getElementsByClassName("btn")[0];
     const caseNumCase = document.getElementById("case"+(i*dimension+j))
@@ -44,15 +89,13 @@ export default function Jeu()  {
     caseNumCase.className = newColorClassName
     caseNumCase.disabled = true;//
     grille[i-1][j-1] ={color:btn.className,click:true}
+    correction()
+
     console.log(grille);
+    console.log(grilleAttendue);
+
   }
 
-/**
- * 
-  {<button id =  {"case" +0} className= "white" onClick={()=>changeState(0)}> case 0</button>
-        <button id =  {"case" +1} className= "white" onClick={()=>changeState(1)}> case 1</button>
-    } dimension 
- */
   function defBtnCase(btnCase,i,j){
     if (i===0 && j === 0) {
       btnCase.id = "vide"
@@ -79,30 +122,8 @@ export default function Jeu()  {
     buttonChoix.className = "btn btn-green"
     buttonChoix.onclick = () => {changeColor();}
   }
-  function genereGrille(){
-    
-    var app = document.getElementsByClassName("App")[0]
-    var buttonChoix = document.createElement("button")
-    var grilleHTML = document.createElement("div")
-    grilleHTML.id = "grilleHTML"
-    app.parentNode.insertBefore(grilleHTML,app.nextSibling)
-    for (let i = 0 ; i <= dimension ; i++){
-   
-      var ligne = document.createElement("div");
-      grilleHTML.insertBefore(ligne,grilleHTML.nextSibling);
-    
-      for (let j = 0 ; j <= dimension ; j++){
-        var btnCase = document.createElement("button");
+  
 
-        defBtnCase(btnCase,i,j)
-        ligne.insertBefore(btnCase,ligne.nextSibling)
-        
-        
-      }
-    }
-    defBtnChoix(buttonChoix)
-    app.parentNode.insertBefore(buttonChoix,app.nextSibling)
-  }
 
   return (
     <>
