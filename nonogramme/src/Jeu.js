@@ -3,34 +3,42 @@ import "./App.css";
 const dimension = 4;
 //attention , il s'agit d'un exemple de présentation, 
 //il peut y avoir des incohérences
-const indicsLigne = []//[[1,2],[0],[3,2],[2]]
-const indicsColonne = []//[[2],[1,2],[0],[1]]
+const indicsLigne = []
+const indicsColonne = []
+const colorF = "gridCell gridCell-gray"
+const colorT = "gridCell gridCell-green"
 
 const caseInitiale = {color:"white", click : false};
 const grille = []
 const grilleAttendue = []
+let nbErreurs = 0 
 
 export default function Jeu()  {
 
-  // Mettre les indications dans une autre couleur lorsque 
-  // une ligne/colonne est complète
-  // === si la ligne/colonne n'a aucune case dont la color est white
-
+  // Mets les indications en bleu lorsque  une ligne/colonne est complète
   function ligneColComplete(){
-  //  genereGrille
     for (let i = 0 ; i < dimension ; i++){
-      //let hasMagenicVendor = vendors.some( vendor => vendor['Name'] === 'Magenic' )
-       if (!grille[i].some(ligne => ligne['color'] === caseInitiale.color)){
+       if (!grille[i].some(cellule => cellule['color'] === caseInitiale.color)){
          console.log(i + "est pleine")
-         document.getElementsByClassName("indicationsi")[i].className = "indicationsf"
+         document.getElementsByClassName("indicationsi")[i].style.backgroundColor = "blue"
        }
       }
+
+      for (let j = 0 ; j < dimension ; j++){
+        let colTemp = []    
+        for (let i = 0 ; i < dimension ; i ++){
+              colTemp[i]=grille[i][j]
+            }
+            if (!colTemp.some(cellule => cellule['color'] === caseInitiale.color)){
+              console.log(j + "est pleine")
+              document.getElementsByClassName("indicationsj")[j].style.backgroundColor = "blue"
+            }
+        }
   }
 
-  // Si erreur ne pas mettre en rouge mais en gris 
-  // et à ajouter ce nombre à la vue
+  // Si erreur ne pas enregistrer l'evenement
 
-  function genereGrille(){
+  function genereJeu(){
     genereationAlea()
     for (let i = 0 ; i < dimension ; i++){
       let ligne = []
@@ -43,7 +51,12 @@ export default function Jeu()  {
     var buttonChoix = document.createElement("button")
     var grilleHTML = document.createElement("div")
     grilleHTML.id = "grilleHTML"
+   
     app.parentNode.insertBefore(grilleHTML,app.nextSibling)
+    var erreur = document.createElement("div");
+    erreur.id = "erreur"
+    erreur.innerHTML = "nombre d'erreur(s) :  "
+    grilleHTML.insertBefore(erreur,grilleHTML.nextSibling)
     for (let i = 0 ; i <= dimension ; i++){
    
       var ligne = document.createElement("div");
@@ -61,7 +74,7 @@ export default function Jeu()  {
 
   function genereationAlea(){
        //remplis aleatoirement une grille
-       const colors = ["gridCell gridCell-gray","gridCell gridCell-green"]
+       const colors = [colorF,colorT]
        for (let i = 0 ; i < dimension ; i++){
          const ligneAlea = []
          for (let j = 0 ; j < dimension ; j ++){ 
@@ -81,15 +94,15 @@ function genereIndications(){
 for (let i = 0 ; i < dimension ; i++){
   let temp = [], cpt = 0 , k = 0  
       for (let j = 0 ; j < dimension ; j ++){
-        if(grilleAttendue[i][j].color === 'gridCell gridCell-green' && j === dimension - 1){
+        if(grilleAttendue[i][j].color === colorT && j === dimension - 1){
           cpt++;
           temp[k] = cpt;
         }
-        else if(grilleAttendue[i][j].color === 'gridCell gridCell-green'){
+        else if(grilleAttendue[i][j].color === colorT){
           cpt++;
         }
       
-        else if(grilleAttendue[i][j].color === 'gridCell gridCell-gray' && cpt !==0){
+        else if(grilleAttendue[i][j].color === colorF && cpt !==0){
           temp[k] = cpt;
           k++;
           cpt = 0 ;
@@ -100,15 +113,15 @@ for (let i = 0 ; i < dimension ; i++){
   for (let j = 0 ; j < dimension ; j++){
     let temp = [], cpt = 0 , k = 0  
         for (let i = 0 ; i < dimension ; i ++){
-          if(grilleAttendue[i][j].color === 'gridCell gridCell-green' && i === dimension - 1){
+          if(grilleAttendue[i][j].color === colorT && i === dimension - 1){
             cpt++;
             temp[k] = cpt;
           }
-          else if(grilleAttendue[i][j].color === 'gridCell gridCell-green'){
+          else if(grilleAttendue[i][j].color === colorT){
             cpt++;
           }
         
-          else if(grilleAttendue[i][j].color === 'gridCell gridCell-gray' && cpt !==0){
+          else if(grilleAttendue[i][j].color === colorF && cpt !==0){
             temp[k] = cpt;
             k++;
             cpt = 0 ;
@@ -122,11 +135,14 @@ for (let i = 0 ; i < dimension ; i++){
 
 function correction(i,j){
 //comparaisons réponses données et réponses attendues
-  
+
      if(grille[i][j].color !== grilleAttendue[i][j].color){
       grille[i][j].color = "gridCell gridCell-red"
       const caseNumCase = document.getElementById("case"+(i*dimension+j))
       caseNumCase.className = grille[i][j].color
+      nbErreurs++
+      document.getElementById("erreur").innerText += nbErreurs
+
      }
  
 }
@@ -146,13 +162,12 @@ function correction(i,j){
     const caseNumCase = document.getElementById("case"+(i*dimension+j))
     const newColorClassName = "gridCell gridCell-"+btn.className.split(" ")[1].split("-")[1]; 
     caseNumCase.className = newColorClassName
-    caseNumCase.disabled = true;//
+    caseNumCase.disabled = true;
     grille[i][j] ={color: newColorClassName,click:true}
     console.log("couleur choisie : " + newColorClassName)
     correction(i,j)
     ligneColComplete()
     console.log(grille);
-    
   }
 
   function defBtnCase(btnCase,i,j){
@@ -182,11 +197,9 @@ function correction(i,j){
     buttonChoix.onclick = () => {changeColor();}
   }
   
-
-
   return (
     <>
-        <button onClick={() => genereGrille()}>Commencer partie</button>
+        <button onClick={() => genereJeu()}>Commencer partie</button>
     </>
   )
 }

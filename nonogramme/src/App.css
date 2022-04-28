@@ -42,7 +42,6 @@
   display:inline-block;
   width :100px;
   height: 100px;
-
 }
 .gridCell-white{
   background-color: white;
@@ -71,10 +70,14 @@
   display:inline-block;
   width :100px;
   height: 100px;
+  font-size:20px;
+
 }
 
 
 .indicationsj{
+  font-size:20px;
+
   margin: 0 auto;
   display:inline-block;
   width :100px;
@@ -82,13 +85,6 @@
 }
 
 
-.indicationsf{
-  margin: 0 auto;
-  display:inline-block;
-  width :100px;
-  height: 100px;
-  background-color: gray;
-}
 
 #vide{
   margin: 0 auto;
@@ -97,6 +93,11 @@
   height: 100px;
   border: none;
   background-color: white;
+}
+
+#erreur{
+  margin:2%;
+  font-size: 30px;
 }
 
 .btn{
