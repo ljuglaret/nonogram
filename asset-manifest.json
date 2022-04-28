@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/nonogram/static/css/main.b0c0ce3c.css",
-    "main.js": "/nonogram/static/js/main.ae3cec07.js",
+    "main.css": "/nonogram/static/css/main.1a11b6bb.css",
+    "main.js": "/nonogram/static/js/main.fb1c1585.js",
     "index.html": "/nonogram/index.html",
-    "main.b0c0ce3c.css.map": "/nonogram/static/css/main.b0c0ce3c.css.map",
-    "main.ae3cec07.js.map": "/nonogram/static/js/main.ae3cec07.js.map"
+    "main.1a11b6bb.css.map": "/nonogram/static/css/main.1a11b6bb.css.map",
+    "main.fb1c1585.js.map": "/nonogram/static/js/main.fb1c1585.js.map"
   },
   "entrypoints": [
-    "static/css/main.b0c0ce3c.css",
-    "static/js/main.ae3cec07.js"
+    "static/css/main.1a11b6bb.css",
+    "static/js/main.fb1c1585.js"
   ]
 }
