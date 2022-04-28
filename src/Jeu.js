@@ -1,12 +1,13 @@
 import React from "react";
 import "./App.css";
 const dimension = 4;
-//attention , il s'agit d'un exemple de présentation, 
-//il peut y avoir des incohérences
+
 const indicsLigne = []
 const indicsColonne = []
 const colorF = "gridCell gridCell-gray"
 const colorT = "gridCell gridCell-green"
+const colorE = "gridCell gridCell-white"
+
 
 const caseInitiale = {color:"white", click : false};
 const grille = []
@@ -15,6 +16,8 @@ let nbErreurs = 0
 
 export default function Jeu()  {
 
+  //placer automatiquement les cases grises lorsque 
+  //toutes les vertes ont été trouvées
   // Mets les indications en bleu lorsque  une ligne/colonne est complète
   function ligneColComplete(){
     for (let i = 0 ; i < dimension ; i++){
@@ -36,8 +39,6 @@ export default function Jeu()  {
         }
   }
 
-  // Si erreur ne pas enregistrer l'evenement
-
   function genereJeu(){
     genereationAlea()
     for (let i = 0 ; i < dimension ; i++){
@@ -55,7 +56,7 @@ export default function Jeu()  {
     app.parentNode.insertBefore(grilleHTML,app.nextSibling)
     var erreur = document.createElement("div");
     erreur.id = "erreur"
-    erreur.innerHTML = "nombre d'erreur(s) :  "
+    erreur.innerHTML = "nombre d'erreur(s) : 0 "
     grilleHTML.insertBefore(erreur,grilleHTML.nextSibling)
     for (let i = 0 ; i <= dimension ; i++){
    
@@ -137,11 +138,11 @@ function correction(i,j){
 //comparaisons réponses données et réponses attendues
 
      if(grille[i][j].color !== grilleAttendue[i][j].color){
-      grille[i][j].color = "gridCell gridCell-red"
+      grille[i][j].color = colorE
       const caseNumCase = document.getElementById("case"+(i*dimension+j))
       caseNumCase.className = grille[i][j].color
       nbErreurs++
-      document.getElementById("erreur").innerText += nbErreurs
+      document.getElementById("erreur").innerHTML = "nombre d'erreur(s) : "+nbErreurs
 
      }
  
@@ -162,8 +163,15 @@ function correction(i,j){
     const caseNumCase = document.getElementById("case"+(i*dimension+j))
     const newColorClassName = "gridCell gridCell-"+btn.className.split(" ")[1].split("-")[1]; 
     caseNumCase.className = newColorClassName
-    caseNumCase.disabled = true;
-    grille[i][j] ={color: newColorClassName,click:true}
+    if (grille[i][j] !== grilleAttendue[i][j]){
+      caseNumCase.disabled = false;
+      grille[i][j] ={color: newColorClassName,click:false}
+    }
+    else{
+      caseNumCase.disabled = true;
+      grille[i][j] ={color: newColorClassName,click:true}
+    }
+    
     console.log("couleur choisie : " + newColorClassName)
     correction(i,j)
     ligneColComplete()
@@ -179,11 +187,17 @@ function correction(i,j){
       btnCase.className = "indicationsj"
       btnCase.disabled = true
       btnCase.innerText = indicsColonne[j-1]
+      if (indicsColonne[j-1].length === 0){
+        btnCase.innerText = 0
+      }
     }
     else if (j === 0){
       btnCase.className = "indicationsi"
       btnCase.disabled = true
       btnCase.innerText = indicsLigne[i-1]
+      if (indicsLigne[i-1].length === 0){
+        btnCase.innerText = 0
+      }
     }
     else{
       btnCase.id = "case" + ((i-1)*dimension+(j-1));

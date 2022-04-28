@@ -40,8 +40,8 @@
 .gridCell{
   margin: 0 auto;
   display:inline-block;
-  width :100px;
-  height: 100px;
+  width :80px;
+  height: 80px;
 }
 .gridCell-white{
   background-color: white;
@@ -66,22 +66,19 @@
 }
 
 .indicationsi{
-  margin: 0 auto;
-  display:inline-block;
-  width :100px;
-  height: 100px;
+ 
+  width :80px;
+  height: 80px;
   font-size:20px;
 
 }
 
 
 .indicationsj{
+  
+  width :80px;
+  height: 80px;
   font-size:20px;
-
-  margin: 0 auto;
-  display:inline-block;
-  width :100px;
-  height: 100px;
 }
 
 

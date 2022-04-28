@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import Jeu from "./Jeu";
 import { createRoot } from 'react-dom/client';
 import "./index.css";

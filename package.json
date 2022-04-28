@@ -1,8 +1,8 @@
 {
-  "name": "nonogramme",
+  "name": "nonogram",
   "version": "0.1.0",
   
-  "homepage": "https://ljuglaret.github.io",
+  "homepage": "https://ljuglaret.github.io/nonogram/",
 
   "private": true,
   "dependencies": {
