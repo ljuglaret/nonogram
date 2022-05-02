@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-const dimension = 4;
+const dimension = 5;
 
 const indicsLigne = []
 const indicsColonne = []
